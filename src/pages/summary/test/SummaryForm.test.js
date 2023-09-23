@@ -35,7 +35,7 @@ test("checkbox disables button on first click and enables on second click", asyn
 
     // fireEvent.click(checkbox);
     await user.click(checkbox);
-    expect(confirmButton).toBeDisabled();
+    expect(confirmButton).toBeEnabled();
 
     // fireEvent.click(checkbox);
     await user.click(checkbox);
