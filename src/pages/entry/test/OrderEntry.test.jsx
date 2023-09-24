@@ -7,10 +7,10 @@ test("handles error for scoops and toppings routes", async () => {
     // server orverride 하기
     server.resetHandlers(
         rest.get("http://localhost:3000/scoops", (req, res, ctx) => {
-            res(ctx.status(500));
+            return res(ctx.status(500));
         }),
         rest.get("http://localhost:3000/toppings", (req, res, ctx) => {
-            res(ctx.status(500));
+            return res(ctx.status(500));
         })
     );
 
