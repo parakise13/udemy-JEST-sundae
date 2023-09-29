@@ -13,12 +13,22 @@ export default function Options({ optionType }) {
     const [error, setError] = useState(false);
     const { totals } = useOrderDetails();
 
-    // optionType is 'scoops' or 'toppings
+    // optionType is 'scoops' or 'toppings'
     useEffect(() => {
+        // create an abortController to attach to network request
+        const controller = new AbortController();
+        // signal 옵션을 주면 axios 호출에서 이 컨트롤러를 확인하고 이 컨트롤러를 중단하면 axios 호출이 중단된다.
         axios
-            .get(`http://localhost:3000/${optionType}`)
+            .get(`http://localhost:3000/${optionType}`, {
+                signal: controller.signal,
+            })
             .then((response) => setItems(response.data))
             .catch((error) => setError(true));
+
+        // abort axios call on component unmount
+        return () => {
+            controller.abort();
+        };
     }, [optionType]);
 
     if (error) {
