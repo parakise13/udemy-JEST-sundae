@@ -2,6 +2,7 @@ import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Options from "../Options";
 import OrderEntry from "../OrderEntry";
+import React from "react";
 
 // 기능테스트
 test("update scoop subtotal when scoops change", async () => {
@@ -66,7 +67,7 @@ test("update toppings subtotal when toppings change", async () => {
 describe("grand total", () => {
     test("grand total starts at $0.00", () => {
         // Test that the total starts out at $0.00
-        const { unmount } = render(<OrderEntry />);
+        const { unmount } = render(<OrderEntry setOrderPhase={jest.fn()} />);
         const grandTotal = screen.getByRole("heading", {
             name: /Grand total: \$/,
         });
@@ -77,7 +78,7 @@ describe("grand total", () => {
 
     test("grand total updates properly if scoop is added first", async () => {
         const user = userEvent.setup();
-        render(<OrderEntry />);
+        render(<OrderEntry setOrderPhase={jest.fn()} />);
         const grandTotal = screen.getByRole("heading", {
             name: /Grand total: \$/,
         });
@@ -100,7 +101,7 @@ describe("grand total", () => {
 
     test("grand total updates properly if topping is added first", async () => {
         const user = userEvent.setup();
-        render(<OrderEntry />);
+        render(<OrderEntry setOrderPhase={jest.fn()} />);
 
         // add cherries and check grand total
         const cherriesCheckbox = await screen.findByRole("checkbox", {
@@ -123,7 +124,7 @@ describe("grand total", () => {
     });
     test("grand total updates properly if item is removed", async () => {
         const user = userEvent.setup();
-        render(<OrderEntry />);
+        render(<OrderEntry setOrderPhase={jest.fn()} />);
 
         // add cherries
         const cherriesCheckbox = await screen.findByRole("checkbox", {
